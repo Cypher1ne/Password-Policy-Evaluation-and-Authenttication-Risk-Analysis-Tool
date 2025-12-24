@@ -1,1 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        .strength-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-8">
+        <div class="flex items-center gap-3 mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <h1 class="text-3xl font-bold text-gray-800">Password Strength Analyzer</h1>
+        </div>
+        
+        <p class="text-gray-600 mb-6">
+            Test your password security and learn how to create stronger passwords.
+        </p>
 
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Enter Password to Analyze
+            </label>
+            <div class="relative">
+                <input
+                    type="password"
+                    id="passwordInput"
+                    placeholder="Type your password here..."
+                    class="w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
+                />
+                <button
+                    id="togglePassword"
+                    class="absolute right-3 top-1/2 text-gray-500 hover:text-gray-700"
+                    style="transform: translateY(-50%);"
+                >
+                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="resultsSection" class="hidden space-y-6">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-700">Strength</span>
+                    <span id="strengthLabel" class="text-sm font-bold"></span>
+                </div>
+                <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div id="strengthBar" class="h-full strength-bar"></div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <span class="font-semibold text-gray-800">Time to Crack</span>
+                </div>
+                <p id="crackTime" class="text-2xl font-bold text-gray-900"></p>
+                <p class="text-xs text-gray-500 mt-1">
+                    Estimated time using modern GPU (10B attempts/sec)
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-gray-800 mb-3">Security Requirements</h3>
+                <div class="grid gap-2" id="checksList"></div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                <h4 class="font-semibold text-blue-900 mb-2">Security Tips</h4>
+                <ul class="text-sm text-blue-800 space-y-1">
+                    <li>Use a unique password for each account</li>
+                    <li>Consider using a passphrase</li>
+                    <li>Enable two-factor authentication when available</li>
+                    <li>Use a password manager to store complex passwords</li>
+                    <li>Never share your passwords via email or text</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="emptyState" class="text-center py-12 text-gray-400">
+            <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <p>Enter a password above to see its strength analysis</p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200">
+            <p class="text-xs text-gray-500 text-center">
+                Your password is never stored or transmitted. All analysis happens locally in your browser.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var passwordInput = document.getElementById('passwordInput');
+        var togglePassword = document.getElementById('togglePassword');
+        var resultsSection = document.getElementById('resultsSection');
+        var emptyState = document.getElementById('emptyState');
+        var strengthBar = document.getElementById('strengthBar');
+        var strengthLabel = document.getElementById('strengthLabel');
+        var crackTime = document.getElementById('crackTime');
+        var checksList = document.getElementById('checksList');
+
+        var commonPasswords = ['password', '123456', 'qwerty', 'abc123', 'password123', 'admin', 'letmein', 'welcome', '12345678', 'iloveyou'];
+        var sequential = ['abc', '123', 'xyz', '012', '234', '345', '456', '567', '678', '789'];
+
+        togglePassword.addEventListener('click', function() {
+            var type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+        });
+
+        passwordInput.addEventListener('input', function(e) {
+            var password = e.target.value;
+            
+            if (password.length === 0) {
+                resultsSection.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+            analyzePassword(password);
+        });
+
+        function analyzePassword(pwd) {
+            var checks = {
+                length: pwd.length >= 12,
+                uppercase: /[A-Z]/.test(pwd),
+                lowercase: /[a-z]/.test(pwd),
+                numbers: /[0-9]/.test(pwd),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd),
+                noCommon: checkNoCommon(pwd),
+                noSequential: checkNoSequential(pwd)
+            };
+
+            var score = calculateScore(pwd, checks);
+            var strength = getStrengthLevel(score);
+            
+            updateUI(strength, checks, pwd);
+        }
+
+        function checkNoCommon(pwd) {
+            var lower = pwd.toLowerCase();
+            for (var i = 0; i < commonPasswords.length; i++) {
+                if (lower.indexOf(commonPasswords[i]) !== -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function checkNoSequential(pwd) {
+            var lower = pwd.toLowerCase();
+            for (var i = 0; i < sequential.length; i++) {
+                if (lower.indexOf(sequential[i]) !== -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function calculateScore(pwd, checks) {
+            var score = 0;
+            
+            if (pwd.length >= 8) score += 10;
+            if (pwd.length >= 12) score += 15;
+            if (pwd.length >= 16) score += 10;
+            
+            if (checks.uppercase) score += 10;
+            if (checks.lowercase) score += 10;
+            if (checks.numbers) score += 10;
+            if (checks.special) score += 15;
+            if (checks.noCommon) score += 15;
+            if (checks.noSequential) score += 10;
+            
+            var chars = pwd.split('');
+            var uniqueChars = {};
+            for (var i = 0; i < chars.length; i++) {
+                uniqueChars[chars[i]] = true;
+            }
+            var uniqueCount = 0;
+            for (var key in uniqueChars) {
+                if (uniqueChars.hasOwnProperty(key)) {
+                    uniqueCount++;
+                }
+            }
+            score += Math.min(uniqueCount * 2, 20);
+            
+            return Math.min(score, 100);
+        }
+
+        function getStrengthLevel(score) {
+            if (score < 30) return { level: 'Very Weak', color: 'bg-red-500', textColor: 'text-red-600', width: '20%' };
+            if (score < 50) return { level: 'Weak', color: 'bg-orange-500', textColor: 'text-orange-600', width: '40%' };
+            if (score < 70) return { level: 'Fair', color: 'bg-yellow-500', textColor: 'text-yellow-600', width: '60%' };
+            if (score < 85) return { level: 'Strong', color: 'bg-blue-500', textColor: 'text-blue-600', width: '80%' };
+            return { level: 'Very Strong', color: 'bg-green-500', textColor: 'text-green-600', width: '100%' };
+        }
+
+        function estimateCrackTime(pwd, checks) {
+            var charset = 0;
+            if (checks.lowercase) charset += 26;
+            if (checks.uppercase) charset += 26;
+            if (checks.numbers) charset += 10;
+            if (checks.special) charset += 32;
+            
+            if (charset === 0) return 'Instantly';
+            
+            var combinations = Math.pow(charset, pwd.length);
+            var attemptsPerSec = 1e10;
+            var seconds = combinations / attemptsPerSec;
+            
+            if (seconds < 1) return 'Instantly';
+            if (seconds < 60) return Math.round(seconds) + ' seconds';
+            if (seconds < 3600) return Math.round(seconds / 60) + ' minutes';
+            if (seconds < 86400) return Math.round(seconds / 3600) + ' hours';
+            if (seconds < 31536000) return Math.round(seconds / 86400) + ' days';
+            if (seconds < 31536000 * 100) return Math.round(seconds / 31536000) + ' years';
+            return 'Centuries+';
+        }
+
+        function updateUI(strength, checks, pwd) {
+            strengthBar.className = 'h-full strength-bar ' + strength.color;
+            strengthBar.style.width = strength.width;
+            strengthLabel.className = 'text-sm font-bold ' + strength.textColor;
+            strengthLabel.textContent = strength.level;
+            crackTime.textContent = estimateCrackTime(pwd, checks);
+
+            var checksData = [
+                { passed: checks.length, text: 'At least 12 characters long' },
+                { passed: checks.uppercase, text: 'Contains uppercase letters (A-Z)' },
+                { passed: checks.lowercase, text: 'Contains lowercase letters (a-z)' },
+                { passed: checks.numbers, text: 'Contains numbers (0-9)' },
+                { passed: checks.special, text: 'Contains special characters' },
+                { passed: checks.noCommon, text: 'Not a common password' },
+                { passed: checks.noSequential, text: 'No sequential characters' }
+            ];
+
+            var html = '';
+            for (var i = 0; i < checksData.length; i++) {
+                var check = checksData[i];
+                html += '<div class="flex items-center gap-2 text-sm">';
+                if (check.passed) {
+                    html += '<svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                    html += '<span class="text-gray-700">' + check.text + '</span>';
+                } else {
+                    html += '<svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+                    html += '<span class="text-gray-400">' + check.text + '</span>';
+                }
+                html += '</div>';
+            }
+            checksList.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
