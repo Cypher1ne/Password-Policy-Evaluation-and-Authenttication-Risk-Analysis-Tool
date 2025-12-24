@@ -1,10 +1,10 @@
-🔐 Password Strength Analyzer
+##🔐 Password Strength Analyzer
 
 A client-side Password Strength Analyzer that evaluates password security in real time and provides actionable feedback to help users create stronger, safer passwords.
 
 This project focuses on security fundamentals, password entropy, and user awareness, making it suitable for beginners building a cybersecurity-focused portfolio.
 
-🚀 Features
+##🚀 Features
 
 Real-time password strength evaluation
 
