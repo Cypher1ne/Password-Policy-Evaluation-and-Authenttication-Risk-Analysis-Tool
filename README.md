@@ -4,7 +4,7 @@ A client-side Password Strength Analyzer that evaluates password security in rea
 
 This project focuses on security fundamentals, password entropy, and user awareness, making it suitable for beginners building a cybersecurity-focused portfolio.
 
-**🚀 Features
+🚀 𝔽𝕖𝕒𝕥𝕦𝕣𝕖𝕤
 
 Real-time password strength evaluation
 
@@ -18,4 +18,9 @@ Detection of weak patterns (common passwords, sequences)
 
 Security best-practice tips for end users
 
-Client-side analysis only (no passwords stored or transmitted)**
+Client-side analysis only (no passwords stored or transmitted)
+
+
+🌐 𝕃𝕚𝕟𝕜
+
+https://cypher1ne.github.io/Password-Strength-Analyzer-/
