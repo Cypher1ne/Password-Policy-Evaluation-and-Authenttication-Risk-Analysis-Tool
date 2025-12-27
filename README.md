@@ -1,5 +1,4 @@
-**🔐 Password Strength Analyzer
-**
+🔐 ℙ𝕒𝕤𝕤𝕨𝕠𝕣𝕕 𝕊𝕥𝕣𝕖𝕟𝕘𝕥𝕙 𝔸𝕟𝕒𝕝𝕪𝕫𝕖𝕣
 
 A client-side Password Strength Analyzer that evaluates password security in real time and provides actionable feedback to help users create stronger, safer passwords.
 
