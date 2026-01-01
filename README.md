@@ -117,7 +117,7 @@ MIT License - Free to use for educational purposes
 
 ## 👤 Author
 
-**[Your Name]**
+**CypherOne**
 - GitHub: [@cypher1ne](https://github.com/Cypher1ne)
 - LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/soumitra-patra-a72102368/)
 - Portfolio: [Your Portfolio](https://cypher1ne.github.io/Portfolio/)
