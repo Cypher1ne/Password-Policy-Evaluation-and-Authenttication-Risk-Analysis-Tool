@@ -11,7 +11,7 @@
 
 A pure HTML/CSS/JavaScript defensive security tool that evaluates password strength and maps weaknesses to real-world attack techniques. No frameworks, no build process - just open and use.
 
-**Live Demo:** https://cypher1ne.github.io/Password-Policy-Evaluation-and-Authenttication-Risk-Analysis-Tool/
+**Live Demo:** https://cypher1ne.github.io/Password-Policy-Evaluation-and-Authentication-Risk-Analysis-Tool/
 
 ## 🎯 Purpose
 
