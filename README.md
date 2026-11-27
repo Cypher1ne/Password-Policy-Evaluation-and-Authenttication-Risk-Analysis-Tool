@@ -1,12 +1,11 @@
 # Password Policy Evaluation & Authentication Risk Analysis Tool
 
-![Security Tool](https://img.shields.io/badge/Security-Defensive%20Analysis-blue)
-![Pure Vanilla JS](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
-
-
 <p align="center">
   <img src="assets/Neon Password Security Dashboard.png" width="100%">
 </p>
+
+![Security Tool](https://img.shields.io/badge/Security-Defensive%20Analysis-blue)
+![Pure Vanilla JS](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
 
 ## 🔒 Overview
 
