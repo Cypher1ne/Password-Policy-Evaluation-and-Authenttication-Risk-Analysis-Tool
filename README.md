@@ -3,6 +3,11 @@
 ![Security Tool](https://img.shields.io/badge/Security-Defensive%20Analysis-blue)
 ![Pure Vanilla JS](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
 
+
+<p align="center">
+  <img src="assets/Neon Password Security Dashboard.png" width="100%">
+</p>
+
 ## 🔒 Overview
 
 A pure HTML/CSS/JavaScript defensive security tool that evaluates password strength and maps weaknesses to real-world attack techniques. No frameworks, no build process - just open and use.
